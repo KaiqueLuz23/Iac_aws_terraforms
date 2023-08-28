@@ -1,0 +1,61 @@
+# Pipeline will only trigger when something is pushed to main branch 
+workflow:  
+    rules:
+      - if: $CI_COMMIT_BRANCH != "auto-123milhas-squad" || $CI_PIPELINE_SOURCE == "merge_request_event"
+        when: never
+      - when: always
+
+# Stages of the pipeline
+stages:
+  - validate
+  - plan
+  - apply
+  - destroy
+
+# Image which will use in each stage
+image:
+  name: hashicorp/terraform:1.4
+  entrypoint:
+    - /usr/bin/env
+    - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Script to be executed before each stage / Configurando Terraform State
+before_script:
+  - terraform --version
+  - echo "$(pwd)"
+  - cd ${TF_DIR}            # To get inside the working directory
+  - terraform init -backend-config="address=${TF_ADDRESS}" -backend-config="lock_address=${TF_ADDRESS}/lock" -backend-config="unlock_address=${TF_ADDRESS}/lock" -backend-config="username=${TF_USERNAME}" -backend-config="password=${TF_PASSWORD}"
+
+# Para validar terraform files configuration
+validate:
+  stage: validate
+  script:
+    - terraform validate 
+
+# Para planejamento da infra
+plan:
+  stage: plan
+  script:
+    - cd ${TF_DIR}  
+    - terraform plan -lock=false -var="AWS_ACESS_KEY=$AWS_ACESS_KEY" -var="AWS_SECRET_KEY=$AWS_SECRET_KEY" 
+  dependencies:              
+    - validate
+
+# Para criar infras na AWS
+apply:
+  stage: apply
+  script:
+    - terraform apply -lock=false -auto-approve -var="AWS_ACESS_KEY=$AWS_ACESS_KEY" -var="AWS_SECRET_KEY=$AWS_SECRET_KEY"
+  dependencies:              
+    - plan
+  when: manual
+
+# To destroy infrastructure on cloud. It needs manual approval (remover coment apenas para destruição)
+# destroy:
+#   stage: destroy
+#   script:
+#     - terraform destroy  -auto-approve
+#   dependencies:          
+#     - plan
+#     - apply
+#   when: manual
