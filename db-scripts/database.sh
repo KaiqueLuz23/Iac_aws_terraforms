@@ -74,10 +74,10 @@ elif [ "$ACTION" == "3" ]; then
         echo "Ocorreu um erro"
     fi
 elif [ "$ACTION" == "4" ]; then
-    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=APP1_flaps.vwfinancial_reports_hotels  --ignore-table=APP1_flaps.vwfinancial_reports  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_$SQUAD
-    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=APP1_flaps.vwfinancial_reports_hotels  --ignore-table=APP1_flaps.vwfinancial_reports  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_bt  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_bt
-    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=APP1_flaps.vwfinancial_reports_hotels  --ignore-table=APP1_flaps.vwfinancial_reports  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_cache  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_cache
-    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=APP1_flaps.vwfinancial_reports_hotels  --ignore-table=APP1_flaps.vwfinancial_reports  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_meta  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_meta
+    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=XXXXXX  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_$SQUAD
+    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=XXXXXX  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_bt  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_bt
+    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=XXXXXX  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_cache  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_cache
+    mysqldump --ssl-mode=DISABLE --column-statistics=0 --no-tablespaces --ignore-table=XXXXXX  -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_flaps_meta  | mysql -h $DB_HOST -u $DB_USER -p"$DB_PASSROOT" APP1_${SQUAD}_meta
     # Comando SQL para realizar o update
     SQL_QUERY_123="UPDATE APP1_$SQUAD.configs SET `value` = REPLACE(`value`, "rudder", "$SQUAD") WHERE `value` LIKE "%rudder%";"
     # # Executa o comando SQL
