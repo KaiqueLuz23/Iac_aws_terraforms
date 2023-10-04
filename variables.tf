@@ -86,27 +86,27 @@ variable "instances" {
     tag         = map(string)
   }))
   default = {
-    # EC2 123MILHAS - FLAPS
+    # EC2 1
     flaps = {
-      ami               = "ami-00a2e89e4543955e8"
+      ami               = "ami-00a2eaaaa543955e8"
       instance_type     = "m6a.large"
       security_group_id = "flaps"
       user_data = "data/flaps.sh"
       tag = {
-        Name = "DEV-123MILHAS-FLAPS"
+        Name = "DEV-FLAPS"
         SQUAD = "FLAPS"
         ENVIRONMENT       = "DEV"
         PROJECT_123MILHAS = "TRUE"
       }
     }
-    # EC2 BUSCAFACIL - FLAPS
+    # EC2 2
     flaps_bf = {
-      ami               = "ami-051b3e231081838c6" 
+      ami               = "ami-051baaaaaa838c6" 
       instance_type     = "t2.small" 
       security_group_id = "flaps"
       user_data = "data/flaps_bf.sh"
       tag = {
-        Name = "DEV-BUSCAFACIL-FLAPS"
+        Name = "DEV-FLAPS"
         SQUAD = "FLAPS"
         ENVIRONMENT       = "DEV"
         PROJECT_BUSCAFACIL = "TRUE"
